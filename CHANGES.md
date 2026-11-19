@@ -1,6 +1,22 @@
 # Release notes
 
-## 2.0.0 (Build - 2026070900)
+## 2.0.2 (Build - 2026111900)
+
+- Added support for Moodle 5.3.
+- The voice list now separates each voice name from its language with a
+  hyphen.
+
+## 2.0.1 (Build - 2026100100)
+
+- Fixed low contrast on the Page Options block title in the Cream, Blue,
+  High contrast and Dark themes. Thanks to AtlasOpsTech for the fix.
+- The About and voice-help panels now close when one of their links is
+  selected, so a link-handling prompt from another plugin (such as a
+  choice to open the link in the same or a new window) appears on top
+  and can be used.
+- Added support for Moodle 5.1 and 5.2.
+
+## 2.0.0 (Build - 2026071025)
 
 - Removed the ATbar dependency and replaced read-aloud with the browser
   Web Speech API.

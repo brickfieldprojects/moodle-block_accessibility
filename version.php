@@ -30,8 +30,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_accessibility';
-$plugin->version   = 2026071025;
+$plugin->version   = 2026111900;
 $plugin->requires  = 2024100700;       // Moodle 4.5 and up.
-$plugin->supported = [405, 500];       // Moodle 4.5 to 5.0.
-$plugin->release   = '2.0.0 (Build - 2026071025)';
+$plugin->supported = [405, 503];       // Moodle 4.5 to 5.3.
+$plugin->release   = '2.0.2 (Build - 2026111900)';
 $plugin->maturity  = MATURITY_STABLE;

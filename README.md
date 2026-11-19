@@ -10,13 +10,13 @@ confusion with the accessibility-review tools in the Brickfield Toolkit (Accessi
 Review, Review+, and Overview).
 
 It is a complete rewrite and simplification of the original block. It runs
-entirely in the reader's browser — there is no third-party toolbar, no server
+entirely in the reader's browser: there is no third-party toolbar, no server
 round-trips, and no database table. Read-aloud uses the browser's own built-in speech,
 so nothing extra is loaded.
 
 Once a reader chooses a setting it follows them across the whole site: preferences are
 kept in a single functional cookie and reapplied before each page paints, so there is no
-flash of the default styling as the reader moves from page to page — even on pages where
+flash of the default styling as the reader moves from page to page, even on pages where
 the block itself is not shown.
 
 ### Features
@@ -27,15 +27,15 @@ scales smoothly, and the reader's choice is remembered site-wide.
 **Colour themes.** Five whole-page colour themes, shown as compact swatch buttons that
 preview each theme:
 
-* **Default** — the site's normal colours.
-* **Cream** — a warm, low-glare reading tint.
-* **Blue** — a soft blue reading tint.
-* **High contrast** — black background, white text and yellow links.
-* **Dark** — a designed dark-grey palette (not a simple colour inversion), so images and
+* **Default**: the site's normal colours.
+* **Cream**: a warm, low-glare reading tint.
+* **Blue**: a soft blue reading tint.
+* **High contrast**: black background, white text and yellow links.
+* **Dark**: a designed dark-grey palette (not a simple colour inversion), so images and
   videos are left untouched.
 
-Each theme recolours the whole page — the navigation, side drawers and menus, cards,
-tables, book and quiz pages, and blocks — not just the main content area. Every theme's
+Each theme recolours the whole page (the navigation, side drawers and menus, cards,
+tables, book and quiz pages, and blocks), not just the main content area. Every theme's
 colours were contrast-checked against their own backgrounds and meet WCAG 2.2 AA.
 
 **Read aloud.** Read the current text selection or the whole page aloud using the
@@ -44,7 +44,7 @@ voice list offers the **on-device** voices installed on the reader's own compute
 device (plus a System default); online, server-streamed voices are deliberately left out
 because they can fail or fall silent. Reading follows the page's language marking, so
 content in another language is read with a matching installed voice. No external service
-is contacted and no audio is uploaded anywhere — a chosen voice runs on the device. The
+is contacted and no audio is uploaded anywhere: a chosen voice runs on the device. The
 read-aloud controls are hidden automatically on browsers that do not provide built-in
 speech (for example some older or embedded browsers). Text size and colour themes work on
 every supported browser.
@@ -63,16 +63,16 @@ in the reader's own browser, and the block does not read that preference on the 
    any other page that shows blocks).
 2. Add the **Page Options** block from the "Add a block" list.
 3. Readers can now use the controls in the block:
-   * **Text size** — use A−, Reset and A+.
-   * **Colour theme** — choose Default, Cream, Blue, High contrast or Dark.
-   * **Read aloud** — choose "selection" or "page", pick a voice (on-device voices, or
+   * **Text size**: use A−, Reset and A+.
+   * **Colour theme**: choose Default, Cream, Blue, High contrast or Dark.
+   * **Read aloud**: choose "selection" or "page", pick a voice (on-device voices, or
      System default), adjust the speech rate, and use Stop.
 4. A reader's choices are remembered and reapplied automatically across the site, so the
    block usually only needs to be added in one place (for example the Dashboard).
 
 ## Configuration
 There is nothing to configure. The block has no site-level settings and needs no API
-keys or accounts — add it to a page and it works.
+keys or accounts. Add it to a page and it works.
 
 Who can add the block is controlled by the standard Moodle capabilities
 `block/accessibility:addinstance` (editing teachers and managers, on a course or other
@@ -83,8 +83,8 @@ context) and `block/accessibility:myaddinstance` (any user, on their Dashboard).
 GNU GPL v3 or later.
 
 ## Version support #
-This plugin has been developed to work on Moodle releases 4.5 and 5.0, on PHP 8.1 or
-later.
+This plugin has been developed to work on Moodle releases 4.5 to 5.3, on PHP 8.1 or
+later (each Moodle release sets its own PHP minimum).
 
 ## History ##
 Earlier versions of this block (then called the Accessibility block) depended on the
@@ -93,7 +93,7 @@ JavaScript and several endpoints.
 
 This version removes that dependency entirely. Read-aloud now uses the browser's own
 built-in speech instead of ATbar, and text size and colour themes are applied with CSS
-and a small cookie — so the block is self-contained, lighter, and makes no third-party
+and a small cookie, so the block is self-contained, lighter, and makes no third-party
 requests. The old YUI JavaScript, the per-instance colour configuration form, the
 `changesize.php`, `changecolour.php`, `database.php` and `userstyles.php` endpoints, and
 the Internet Explorer workarounds were removed at the same time.
