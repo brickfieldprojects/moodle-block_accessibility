@@ -21,7 +21,7 @@
  * around Moodle. Read-aloud uses the browser's own Web Speech API; no external
  * library is loaded.
  *
- * The cookie value is "scale|scheme|voice", e.g. "1.3|4|" — the third field is a
+ * The cookie value is "scale|scheme|voice", e.g. "1.3|4|": the third field is a
  * URL-encoded stable id of the chosen read-aloud voice ("" means the browser default).
  * A tiny inline script in the page head (added by the block's hook) applies the scale
  * and scheme before the page paints, so there is no flash of default styling on
@@ -284,8 +284,8 @@ const findVoice = (id, voices) => {
  * voice for that language.
  *
  * This is used for "System default" reading. Some browsers (notably Firefox) do not pick a
- * voice by the utterance's language on their own — they read with their single default voice
- * whatever `lang` is set — so we choose a matching voice explicitly to read the content in
+ * voice by the utterance's language on their own (they read with their single default voice
+ * whatever `lang` is set), so we choose a matching voice explicitly to read the content in
  * its own language.
  *
  * @param {string} lang
@@ -314,7 +314,7 @@ const pickVoiceForLang = (lang, voices) => {
  * left out: they stream from a server and can fail or fall silent, whereas on-device voices
  * need no network and always sound. Only voices in the page's language are shown (page locale
  * first); a wrong-language voice is never offered, since it would read the page as nonsense.
- * If no on-device voice matches the page language, only the System default is offered — it
+ * If no on-device voice matches the page language, only the System default is offered; it
  * still reads in the page language using whatever voice the browser picks. Rebuilding clears
  * the previously added options so repeated "voiceschanged" events never create duplicates. A
  * saved online voice (no longer offered) is reset to the system default; a saved on-device
@@ -331,7 +331,7 @@ const populateVoices = () => {
         const voices = window.speechSynthesis.getVoices();
         // The page's own content language drives the list: the `<html lang>` (fr on a French
         // course) first, then Moodle's UI language, then the browser's. Using the content
-        // language — not the UI language — is what makes a French page offer French voices.
+        // language (not the UI language) is what makes a French page offer French voices.
         const locale = (document.documentElement.lang || cfg.pageLang || navigator.language || 'en').toLowerCase();
         const base = locale.split('-')[0];
 
@@ -350,7 +350,7 @@ const populateVoices = () => {
             return true;
         });
 
-        // Only voices in the page's language — never offer a wrong-language voice, which
+        // Only voices in the page's language. Never offer a wrong-language voice, which
         // would read the page as nonsense. If no on-device voice is installed for the page
         // language, the list is empty and only the System default remains.
         const list = local.filter((voice) => (voice.lang || '').toLowerCase().split('-')[0] === base);
@@ -361,7 +361,7 @@ const populateVoices = () => {
 
         // Reset the saved choice only when it is genuinely unavailable as an on-device voice
         // (e.g. a previously chosen online voice). Do NOT reset just because it is in another
-        // language than the current page — the reader keeps their preference as they move
+        // language than the current page: the reader keeps their preference as they move
         // between pages. Guard on a loaded list so we never clear on the empty initial call
         // before voices arrive.
         const saved = findVoice(selectedVoiceId, voices);
@@ -378,7 +378,7 @@ const populateVoices = () => {
         list.forEach((voice) => {
             const option = document.createElement('option');
             option.value = voiceKey(voice);
-            option.textContent = voice.name + ' — ' + (voice.lang || '');
+            option.textContent = voice.name + ' - ' + (voice.lang || '');
             select.appendChild(option);
         });
 
@@ -419,13 +419,13 @@ const VOICE_START_TIMEOUT = 4000;
 /**
  * Speak a list of chunks one at a time with the given voice, advancing when each finishes.
  *
- * Queueing several utterances at once is unreliable in some browsers — especially with a
- * chosen (often online) voice, where the queue can silently stall — so we speak one at a
+ * Queueing several utterances at once is unreliable in some browsers, especially with a
+ * chosen (often online) voice, where the queue can silently stall, so we speak one at a
  * time and only advance while this read is still current (stopping, or a new read, bumps
  * speechToken, so the onerror that cancel() fires cannot chain into the next chunk).
  *
- * If a chosen voice never produces audio — a genuine error before it starts, or nothing at
- * all within VOICE_START_TIMEOUT — we fall back once to the browser's default voice and
+ * If a chosen voice never produces audio (a genuine error before it starts, or nothing at
+ * all within VOICE_START_TIMEOUT), we fall back once to the browser's default voice and
  * re-read from the top, so the reader is never left in silence.
  *
  * @param {string[]} chunks
@@ -484,7 +484,7 @@ const speakChunks = (chunks, voice, myToken, allowFallback, contentLangCode) => 
         };
         utterance.onerror = (event) => {
             clearWatchdog();
-            // Stop, or a new read, cancels the current utterance — that is not a voice failure.
+            // Stop, or a new read, cancels the current utterance; that is not a voice failure.
             const err = event && event.error;
             if (err === 'canceled' || err === 'interrupted') {
                 return;
@@ -516,8 +516,8 @@ const speakChunks = (chunks, voice, myToken, allowFallback, contentLangCode) => 
  * The best language for some content: the nearest ancestor `lang` attribute, then the
  * document's `<html lang>`, then Moodle's UI language, then the browser's, then 'en'.
  *
- * Moodle sets `lang` authoritatively — on `<html>` from the page/course language, and per
- * span for multilingual content — so the attribute beats any content-sniffing guess and,
+ * Moodle sets `lang` authoritatively (on `<html>` from the page/course language, and per
+ * span for multilingual content), so the attribute beats any content-sniffing guess and,
  * unlike the browser's language-detection APIs, works in every browser.
  *
  * @param {?Node} node A node within the content being read (e.g. the selection's anchor).
@@ -560,7 +560,7 @@ const speak = (text, lang) => {
     } catch (e) {
         voice = null;
     }
-    // Never read with a voice whose language does not match the content — an English voice
+    // Never read with a voice whose language does not match the content: an English voice
     // reading French sounds like nonsense.
     if (voice) {
         const voicebase = (voice.lang || '').toLowerCase().split('-')[0];
@@ -728,6 +728,22 @@ const bindEvents = () => {
     on('bfa-about-close', () => closeDialog('bfa-about'));
     on('bfa-voicehelp-open', () => openDialog('bfa-voicehelp'));
     on('bfa-voicehelp-close', () => closeDialog('bfa-voicehelp'));
+
+    // A modal <dialog> sits in the browser's top layer and makes the rest of the page
+    // inert, so anything another plugin shows in response to a link click (such as a
+    // "same window / new window" choice) would be hidden behind it and unreachable.
+    // Close the dialog as the link is clicked, without cancelling the click; native
+    // close() also returns focus to the button that opened the dialog.
+    ['bfa-about', 'bfa-voicehelp'].forEach((id) => {
+        const dialog = document.getElementById(id);
+        if (dialog) {
+            dialog.addEventListener('click', (event) => {
+                if (event.target.closest('a[href]')) {
+                    closeDialog(id);
+                }
+            });
+        }
+    });
 
     // Hide the read-aloud controls entirely when the browser has no speech engine.
     if (!speechSupported()) {

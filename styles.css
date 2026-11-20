@@ -316,7 +316,7 @@ html.bfa-font-active {
  * as High contrast and Dark: the `--bs-*` overrides recolour Bootstrap-native
  * components, and the unified surface list below (which now includes schemes 2 and 3)
  * reaches the Moodle-specific surfaces. They are LIGHT themes, so unlike dark/HC they
- * do NOT set `data-bs-theme` — dark text on a light tint. Palettes are WCAG 2.2 AA
+ * do NOT set `data-bs-theme`: dark text on a light tint. Palettes are WCAG 2.2 AA
  * verified: cream text 13.3:1, links 6.2:1; blue text 13.2:1, links 7.1:1. */
 html.bfa-scheme-2 {
     --bs-body-bg: #fbf6e9;
@@ -374,7 +374,7 @@ html.bfa-scheme-3 {
     --bfa-edge: #5a83ba;
 }
 
-/* High contrast — PROTOTYPE (approach A + B), scheme 4 only.
+/* High contrast: PROTOTYPE (approach A + B), scheme 4 only.
  *
  * A. Redefine the Bootstrap 5.3 colour custom properties on the scheme root. Every
  *    Bootstrap-native component and utility (cards, dropdowns, list groups, badges,
@@ -534,13 +534,13 @@ a, .navbar .nav-link, .breadcrumb-item a, .list-group-item-action
     text-decoration: underline !important;
 }
 
-/* Dark mode — scheme 5.
+/* Dark mode: scheme 5.
  *
  * Uses the same A + B + C mechanism as scheme 4 (high contrast), but with a
  * designed grey palette that keeps surface depth rather than flat black:
  *   A. Redefine the Bootstrap 5.3 colour custom properties on the scheme root.
  *   B. The JS (and pre-paint head script) also set `data-bs-theme="dark"`, which
- *      here is Bootstrap's genuine dark mode used as intended — not a filter/invert.
+ *      here is Bootstrap's genuine dark mode used as intended, not a filter/invert.
  *   C. Mop-up for Moodle-custom surfaces compiled from SCSS variables.
  *
  * Palette is WCAG 2.2 AA verified against its surfaces:
